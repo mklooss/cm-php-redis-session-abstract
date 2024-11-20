@@ -4,7 +4,7 @@
 
 #### Features: ####
 - When a session's data size exceeds the compression threshold the session data will be compressed.
-- Compression libraries supported are 'gzip', 'lzf', 'lz4', and 'snappy'.
+- Compression libraries supported are 'gzip', 'lzf', 'lz4', 'snappy' and 'zstd'.
   - Gzip is the slowest but offers the best compression ratios.
   - Lzf can be installed easily via PECL.
   - Lz4 is supported by HHVM.

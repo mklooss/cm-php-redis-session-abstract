@@ -89,7 +89,7 @@ interface ConfigInterface
     public function getCompressionThreshold();
 
     /**
-     * Get compression library (gzip, lzf, lz4 or snappy)
+     * Get compression library (gzip, lzf, lz4, snappy or zstd)
      *
      * @return string
      */

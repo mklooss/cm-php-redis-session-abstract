@@ -35,7 +35,7 @@ namespace Cm\RedisSession;
  *
  * Features:
  *  - When a session's data exceeds the compression threshold the session data will be compressed.
- *  - Compression libraries supported are 'gzip', 'lzf', 'lz4' and 'snappy'.
+ *  - Compression libraries supported are 'gzip', 'lzf', 'lz4', 'snappy' and 'zstd'.
  *  - Compression can be enabled, disabled, or reconfigured on the fly with no loss of session data.
  *  - Expiration is handled by Redis. No garbage collection needed.
  *  - Logs when sessions are not written due to not having or losing their lock.
@@ -824,6 +824,7 @@ class Handler implements \SessionHandlerInterface
                 case 'lzf':    $data = lzf_compress($data); break;
                 case 'lz4':    $data = lz4_compress($data); $prefix = ':l4:'; break;
                 case 'gzip':   $data = gzcompress($data, 1); break;
+                case 'zstd':   $data = zstd_compress($data); break;
             }
             if($data) {
                 $data = $prefix.$data;
@@ -858,6 +859,7 @@ class Handler implements \SessionHandlerInterface
             case ':lz:': $data = lzf_decompress(substr($data,4)); break;
             case ':l4:': $data = lz4_uncompress(substr($data,4)); break;
             case ':gz:': $data = gzuncompress(substr($data,4)); break;
+            case ':zs:': $data = zstd_uncompress(substr($data,4)); break;
         }
         return $data;
     }
